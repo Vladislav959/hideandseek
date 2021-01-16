@@ -1,0 +1,25 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "choco": "^0.2.1",
+    "express": "^4.17.1",
+    "gulp": "^4.0.2",
+    "mapbox-gl": "^2.0.0",
+    "mapbox-gl-draw-circle": "^1.1.2",
+    "mongodb": "^3.6.3",
+    "ngrok": "^3.4.0",
+    "qr-scanner": "^1.2.0",
+    "socket.io": "^3.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

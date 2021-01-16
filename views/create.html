@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создать комнату</title>
+    <style>
+        @font-face{
+            font-family:'Proxima';
+            src:url('./proxima.ttf');
+        }
+        @font-face{
+            font-family:'Montserrat';
+            src:url('./montserrat.ttf');
+        }
+        body{
+            color:white;
+            font-family:'Proxima';
+            font-size:1.05em;
+            margin:0;
+            padding:0 calc((100vw - 400px) / 2);
+            background:#030621;
+        }
+        p,h1,h2,h3,h4,h5{
+            margin:0;
+        }
+        h1,h2,h3,h4,h5{
+            font-family:'Montserrat'
+        }
+        *{
+            box-sizing: border-box;
+        }
+        :focus{
+            outline:none;
+        }
+        
+        .basic_input, .create_room{
+            border:2px solid #8b5fe9;
+            border-radius:10px;
+            font-size:1.1em;
+            background:none;
+            margin-top:10px;
+            font-family: 'Proxima';
+        }
+        .basic_input{
+            padding:13px;
+            width:400px;
+            color:white;
+            margin-bottom:15px;
+            font-weight: 100;
+        }
+        .basic_input::placeholder{
+            color:white
+        }
+        
+        .create_room{
+            padding:9px 12px;
+           margin-top:15px;
+           color:white;
+            background:#8b5fe9;
+        }
+        .room_code{
+            font-size:1.3em;
+            margin-top:0px;
+        }
+        .mode{
+            padding:15px 25px;
+            background:transparent;
+            border-radius:13px;
+            border:2px solid #8b5fe9;
+            display:flex;
+            align-items:center;
+            user-select: none;
+            width:400px;
+            margin-top:15px;
+        }
+        .mode:first-child{
+            margin-top:0;
+        }
+        .mode__radio{
+            width:40px;
+            height:40px;
+            margin-right:24px;
+        }
+       .mode__text p{
+            margin-top:3px;
+       }
+       
+        .radio {
+	 display: grid;
+	 grid-template-columns: min-content auto;
+	 grid-gap: 0.5em;
+	 font-size: 2.25rem;
+	 color: #8b5fe9;
+}
+ .radio:focus-within .radio__label {
+	 transform: scale(1.05);
+	 opacity: 1;
+}
+ .radio__input {
+	 display: flex;
+}
+ .radio__input input {
+	 opacity: 0;
+	 width: 0;
+	 height: 0;
+}
+ .radio-gradient input:checked + .radio__control {
+	 background: radial-gradient(#8b5fe9 50%, rgba(255, 0, 0, 0) 51%);
+}
+ .radio-before .radio__control {
+	 display: grid;
+	 place-items: center;
+}
+ .radio-before input + .radio__control::before {
+	 content: "";
+	 width: 20px;
+	 height:20px;
+	 box-shadow: inset 0.5em 0.5em #8b5fe9;
+	 border-radius: 50%;
+	 transform: scale(0);
+}
+ .radio-before input:checked + .radio__control::before {
+	 transform: scale(1);
+}
+ .radio__control {
+	 display: block;
+	 width: 40px;
+	 height: 40px;
+	 border-radius: 50%;
+	 border: 2.5px solid #8b5fe9;
+}
+.switch{
+    --active: #8b5fe9;
+    --active-inner: #fff;
+    --focus: 2px rgba(39, 94, 254, 0.3);
+    --border: #8b5fe9;
+    --background: #030621;
+    --disabled: #F6F8FF;
+    --disabled-inner: #E1E6F9;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    height: 31px;
+    outline: none;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    margin: 0;
+    cursor: pointer;
+    background: var(--b, var(--background));
+    border: 2px solid #8b5fe9;
+    transition: background .25s ease;
+
+  }
+  .switch:after{
+    content: '';
+    display: block;
+    left: 0;
+    top: 0;
+    position: absolute;
+    transition: transform 0.25s ease;
+  }
+  .switch:checked{
+    --b: var(--active);
+    --bc: var(--active);
+    --d-o: 0.3s;
+    --d-t: 0.6s;
+    --d-t-e: cubic-bezier(0.2, 0.85, 0.32, 1.2);
+  }
+  .switch + label{
+    font-size: 14px;
+    line-height: 21px;
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+    margin-left: 4px;
+  }
+  
+  .switch {
+    width: 55px;
+    border-radius: 20px;
+  }
+  .switch:after {
+    left: 4.2px;
+    top: 4.2px;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    background: var(--ab, var(--border));
+    transform: translateX(var(--x, 0));
+  }
+  .switch:checked {
+    --ab: white;
+    --x: 25px;
+  }
+.back{
+    width:52px;
+    height:52px;
+    margin-top:15px;
+    display:none;
+    padding:12px;
+    border-radius:50%;
+    background:#8b5fe9;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+.back svg{
+    width:28px;
+    height:28px;
+}
+.players_count{
+    width:40px;
+    text-align: center; 
+    padding:9px;
+}
+@media(max-width:480px){
+    .mode{
+        width:100%;
+    }
+    .basic_input:not(.players_count){
+        width:100%;
+    }
+}
+@media(max-width:449px){
+    .mode{
+        padding:15px 20px;
+    }
+    .mode__radio{
+        margin-right:21px;
+    }
+    body{
+                padding:0 5vw;
+            }
+}
+    </style>
+</head>
+<body>
+    <div class="back"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></div>
+        <input type="text" class="basic_input enter_name" placeholder="Ваше имя">
+        <p>Код комнаты:</p>
+        <p class="room_code"></p>
+        <p style="font-size:1.3em;margin-bottom:8px;margin-top:15px;">Выберите режим:</p>
+        <div class="modes">
+        <div class="mode" data-id="0">
+            <div class="mode__radio">
+                <label class="radio radio-before">
+                    <span class="radio__input">
+                      <input type="radio" name="visualmode" value="basic">
+                      <span class="radio__control"></span>
+                    </span>
+                  </label>
+                  
+            </div>
+            <div class="mode__text">
+            <h2>Прятки</h2>
+            <p>Классика. Ностальгия. Просто поиграть.</p>
+                </div>
+        </div>
+        <div class="mode" data-id="1">
+            <div class="mode__radio">
+                <label class="radio radio-before">
+                    <span class="radio__input">
+                      <input type="radio" name="visualmode" value="hunter">
+                      <span class="radio__control"></span>
+                    </span>
+                  </label>
+            </div>
+            <div class="mode__text">
+            <h2>Охотник</h2>
+            <p>Теперь каждые 30 секунд водящему виден ближайший игрок.</p>
+                </div>
+        </div>
+        <div class="mode" data-id="2">
+            <div class="mode__radio">
+                <label class="radio radio-before">
+                    <span class="radio__input">
+                      <input type="radio" name="visualmode" value="flypoint">
+                      <span class="radio__control"></span>
+                    </span>
+                  </label>
+                  
+            </div>
+            <div class="mode__text">
+            <h2>Точка взлёта</h2>
+            <p>Мирные пытаются добраться до точки, а водящий охраняет её.</p>
+                </div>
+        </div>
+        <div class="mode" data-id="3">
+            <div class="mode__radio">
+                <label class="radio radio-before">
+                    <span class="radio__input">
+                      <input type="radio" name="visualmode" value="knocker">
+                      <span class="radio__control"></span>
+                    </span>
+                  </label>
+                  
+            </div>
+            <div class="mode__text">
+            <h2>Постучись!</h2>
+            <p>Мирные пытаются добраться до точки, а водящий охраняет её.</p>
+                </div>
+        </div>
+        </div>
+        <input type="hidden" name="mode" value="basic">
+    <p>мпр:
+        <input id="s1" type="checkbox" class="switch"></p>
+        <p>Число игроков (макс. 10):&nbsp;&nbsp;<input type="number" class="basic_input players_count"></p>
+        <input type="submit" class="create_room" value="Создaть">
+    <script>
+        document.querySelector('input[type="radio"][value="basic"]').click();
+        function getCode() {
+    let randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let result = '';
+    for ( let i = 0; i < 6; i++ ) {
+        result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+    }
+    return result;
+}
+let roomCode = getCode();
+document.querySelector('.room_code').innerText = roomCode;
+const sendingName = document.querySelector('.enter_name');
+const sendingCount = document.querySelector('.players_count');
+const sendingMode = document.querySelector('input[name="mode"]');
+document.querySelector('.create_room').onclick = ()=>{
+    if(sendingCount.value == '' || sendingMode.value == '' || sendingName.value == ''){
+        alert('Ошибка')
+    }
+    else{
+        location.href = '/room?roomId=' + roomCode + '&name=' + sendingName.value + '&mode=' + sendingMode.value + '&count=' +sendingCount.value;
+    }
+    
+}
+document.querySelectorAll('.mode').forEach(block=>{
+    block.onclick = function(){
+        let id = this.dataset.id;
+        document.querySelectorAll('input[name="visualmode"]')[id].click();
+        
+    }
+})
+document.querySelectorAll('input[name="visualmode"]').forEach(item=>{
+    item.onclick = function(){
+        document.querySelector('input[name="mode"]').value = this.value;
+    }
+})
+const players_count = document.querySelector('.players_count');
+players_count.onchange = function() {
+    let curvalue = parseInt(players_count.value,10);
+    if(curvalue < 2){
+        players_count.value = '2';
+    }
+  else if(curvalue>10){
+        players_count.value = '10';
+  }
+}
+
+    </script>
+</body>
+</html>
