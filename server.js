@@ -147,7 +147,7 @@ user.toGame = true;
     
     });
     socket.on("start game", data => {
-        console.log('1')
+        console.log(users);
         if(checkCreatority(data.room,data.id)){
             console.log('2')
             roomSocket.to(data.room).emit("preparing game",true);
@@ -193,7 +193,9 @@ if(usersPrivate[privateNumber].toGame !== true){
             roomSocket.to(roomId_s).emit('countdown stopped',true)
             clearTimeout(global.gameCountdown);
         }
-        roomsData[roomIndex].playersCount--;
+        if(roomsData[roomIndex].playersCount--){
+            console.log('WARNING')
+        }
         if(checkCreatority(user.roomId,user.id)){
 		roomSocket.to(user.roomId).emit('console log','testing');
            roomsData[roomsData.findIndex(room => room.roomId == user.roomId)].creatorId = users[Math.floor(Math.random() * users.filter(item => item.roomId == user.roomId).length++)].id;
@@ -274,14 +276,20 @@ console.log(curUser);
         if(user = getUser(socket.id)){
         console.log('lefting:'+user.roomId);
         quitUser(socket.id);
+        console.log(users);
         let index = roomsData.findIndex(room => room.roomId == user.roomId);
+        console.log(roomsData[index].creatorId);
         roomsData[index].playersCount--;
         console.log( roomsData[index].playersCount);
-        if(roomsData[index].playersCount > 1){
+        let playersCount = roomsData[index].playersCount;
+        if(playersCount > 1){
             gameSocket.to(user.roomId).emit('user left',user.username);
         }
-        else{
+        else if(playersCount == 1){
             console.log('whaaat');
+        }
+        else if(playersCount == 0){
+    roomsData.splice(index,1);
         }
     }
     })
