@@ -163,7 +163,7 @@ padding-bottom:15px;-webkit-transform: translateZ(0);
 transform: translateZ(0);
 z-index:3;
 opacity:0;
-animation:slide .9s;
+animation-fill-mode:forwards;
 }
 @keyframes slide{
 0%{
@@ -180,8 +180,7 @@ opacity:1:
 }
 }
 .qr_camera.shown{
-bottom:0;
-opacity:1;
+animation:slide .9s;
 }
 .qr_preview_c{
     width: calc(100vw - 60px);
