@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js"></script>
+
+    <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
     <title>Создать комнату</title>
     <style>
         @font-face{
@@ -35,7 +42,7 @@
         }
         
         .basic_input, .create_room{
-            border:2px solid #8b5fe9;
+            border:2.5px solid #8b5fe9;
             border-radius:10px;
             font-size:1.1em;
             background:none;
@@ -67,7 +74,7 @@
             padding:15px 25px;
             background:transparent;
             border-radius:13px;
-            border:2px solid #8b5fe9;
+            border:2.5px solid #8b5fe9;
             display:flex;
             align-items:center;
             user-select: none;
@@ -311,6 +318,9 @@ input[type=number] {
     <p>мпр:
         <input id="s1" type="checkbox" class="switch"></p>
         <p>Число игроков (макс. 10):&nbsp;&nbsp;<input type="number" class="basic_input players_count"></p>
+        <div id="map" style="width:90vw;height:90vw;margin-left:5vw;">
+
+        </div>
         <input type="submit" class="create_room" value="Создaть">
     <script>
         document.querySelector('input[type="radio"][value="basic"]').click();
@@ -324,6 +334,157 @@ input[type=number] {
 }
 let roomCode = getCode();
 document.querySelector('.room_code').innerText = roomCode;
+function getCoords(position) {
+          userLatitude = position.coords.latitude;
+          userLongitude = position.coords.longitude;
+        }
+        let gpsOptions = {
+          enableHighAccuracy: true,
+          timeout: 1000,
+          maximumAge: 0,
+        };
+new Promise((resolve, reject) => {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              getCoords,
+              null,
+              gpsOptions
+            );
+          }
+          setTimeout(() => {
+            resolve(1);
+          }, 500);
+        }).then((result) => {
+mapboxgl.accessToken =
+            "pk.eyJ1IjoidmxhZG9zcyIsImEiOiJja2lwbGk2dG0wNTcyMzFueWk2a2w5Y3pmIn0.TUY7Uh57rkJWDux_HdtaVQ";
+          let map = new mapboxgl.Map({
+            container: "map",
+            style: "mapbox://styles/vladoss/ckipmxp6r44xt17m3gbp2vk6n",
+            center: [userLongitude, userLatitude],
+            zoom: 18,
+          });
+          var canvas = map.getCanvasContainer();
+ 
+var geojson = {
+'type': 'FeatureCollection',
+'features': [
+{
+'type': 'Feature',
+'geometry': {
+'type': 'Point',
+'coordinates': [userLongitude, userLatitude]
+}
+}
+]
+};
+ 
+function onMove(e) {
+var coords = e.lngLat;
+ 
+// Set a UI indicator for dragging.
+canvas.style.cursor = 'grabbing';
+ 
+// Update the Point feature in `geojson` coordinates
+// and call setData to the source layer `point` on it.
+geojson.features[0].geometry.coordinates = [coords.lng, coords.lat];
+map.getSource('point').setData(geojson);
+map.remove('circle-fill')
+let gameZoneOptions = {
+              center: turf.point([coords.lng,coords.lat]),
+              radius: 25,
+              options: {
+                steps: 80,
+                units: "meters",
+              },
+            };
+            let gameZone = turf.circle(
+              gameZoneOptions.center,
+              gameZoneOptions.radius,
+              gameZoneOptions.options
+            );
+
+            map.addLayer({
+              id: "circle-fill",
+              type: "fill",
+              source: {
+                type: "geojson",
+                data: gameZone,
+              },
+              paint: {
+                "fill-color": "skyblue",
+                "fill-opacity": 0.5,
+              },
+            });
+}
+ 
+function onUp(e) {
+
+// Unbind mouse/touch events
+map.off('mousemove', onMove);
+map.off('touchmove', onMove);
+}
+ 
+          map.on("load", function () {
+            map.addSource('point', {
+'type': 'geojson',
+'data': geojson
+});
+ 
+map.addLayer({
+'id': 'point',
+'type': 'circle',
+'source': 'point',
+'paint': {
+'circle-radius': 10,
+'circle-color': '#3887be'
+}
+});
+map.on('mousedown', 'point', function (e) {
+// Prevent the default map drag behavior.
+e.preventDefault();
+ 
+canvas.style.cursor = 'grab';
+ 
+map.on('mousemove', onMove);
+map.once('mouseup', onUp);
+});
+ 
+map.on('touchstart', 'point', function (e) {
+if (e.points.length !== 1) return;
+ 
+// Prevent the default map drag behavior.
+e.preventDefault();
+ 
+map.on('touchmove', onMove);
+map.once('touchend', onUp);
+});
+let gameZoneOptions = {
+              center: turf.point([userLongitude, userLatitude]),
+              radius: 25,
+              options: {
+                steps: 80,
+                units: "meters",
+              },
+            };
+            let gameZone = turf.circle(
+              gameZoneOptions.center,
+              gameZoneOptions.radius,
+              gameZoneOptions.options
+            );
+
+            map.addLayer({
+              id: "circle-fill",
+              type: "fill",
+              source: {
+                type: "geojson",
+                data: gameZone,
+              },
+              paint: {
+                "fill-color": "skyblue",
+                "fill-opacity": 0.5,
+              },
+            });
+        })})
 const sendingName = document.querySelector('.enter_name');
 const sendingCount = document.querySelector('.players_count');
 const sendingMode = document.querySelector('input[name="mode"]');
