@@ -174,7 +174,6 @@ opacity:1;
     width: calc(96.5vw - 60px);
     overflow: hidden;
 margin:1.75vw;
-margin-bottom:0;
     height: calc(96.5vw - 60px);
     border-radius: 20px;
 }
@@ -211,7 +210,6 @@ margin-top: -60%;
             padding:10px;
             color:white;
             font-family:'Proxima';
-            margin-top:11px;
             font-size:1em;
 }
 .msg_error svg{
@@ -337,7 +335,10 @@ location.href = `/room?roomId=${result}&name=test`;
             qrElem1.classList.add('shown');
             qrElem2.classList.add('shown');
         }
-      
+      qrElem2.onclick = function(){
+qrElem1.classList.remove('shown');
+            qrElem2.classList.remove('shown');
+}
     </script>
 </body>
 </html>
