@@ -388,7 +388,8 @@ canvas.style.cursor = 'grabbing';
 // and call setData to the source layer `point` on it.
 geojson.features[0].geometry.coordinates = [coords.lng, coords.lat];
 map.getSource('point').setData(geojson);
-map.remove('circle-fill')
+map.removeLayer('circle-fill');
+map.removeSource('circle-fill');
 let gameZoneOptions = {
               center: turf.point([coords.lng,coords.lat]),
               radius: 25,
