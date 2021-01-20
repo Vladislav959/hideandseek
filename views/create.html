@@ -388,34 +388,15 @@ canvas.style.cursor = 'grabbing';
 // and call setData to the source layer `point` on it.
 geojson.features[0].geometry.coordinates = [coords.lng, coords.lat];
 map.getSource('point').setData(geojson);
-map.removeLayer('circle-fill');
-map.removeSource('circle-fill');
-let gameZoneOptions = {
-              center: turf.point([coords.lng,coords.lat]),
-              radius: 25,
-              options: {
+let gameZone = turf.circle(
+              turf.point([userLongitude, userLatitude]),
+              25,
+              {
                 steps: 80,
                 units: "meters",
-              },
-            };
-            let gameZone = turf.circle(
-              gameZoneOptions.center,
-              gameZoneOptions.radius,
-              gameZoneOptions.options
+              }
             );
-
-            map.addLayer({
-              id: "circle-fill",
-              type: "line",
-              source: {
-                type: "geojson",
-                data: gameZone,
-              },
-              paint: {
-                "line-color": "black",
-                "line-width": 4,
-              },
-            });
+map.getSource('zone').setData(gameZone)
 }
  
 function onUp(e) {
@@ -459,27 +440,19 @@ e.preventDefault();
 map.on('touchmove', onMove);
 map.once('touchend', onUp);
 });
-let gameZoneOptions = {
-              center: turf.point([userLongitude, userLatitude]),
-              radius: 25,
-              options: {
+            let gameZone = turf.circle(
+              turf.point([userLongitude, userLatitude]),
+              25,
+              {
                 steps: 80,
                 units: "meters",
-              },
-            };
-            let gameZone = turf.circle(
-              gameZoneOptions.center,
-              gameZoneOptions.radius,
-              gameZoneOptions.options
+              }
             );
-
+map.addSource('zone', { type: 'geojson', data: gameZone })
             map.addLayer({
               id: "circle-fill",
               type: "type",
-              source: {
-                type: "geojson",
-                data: gameZone,
-              },
+              source: 'zone',
               paint: {
                 "line-color": "skyblue",
                 "line-width": 4,
