@@ -163,7 +163,7 @@ padding-bottom:15px;-webkit-transform: translateZ(0);
 transform: translateZ(0);
 z-index:3;
 opacity:0;
-transition:bottom .6s, opacity .9s;
+transition:bottom .5s, opacity .8s;
 }
 
 .qr_camera.shown{
@@ -171,9 +171,10 @@ bottom:0;
 opacity:1;
 }
 .qr_preview_c{
-    width: calc(100vw - 60px);
+    width: calc(90vw - 60px);
     overflow: hidden;
-    height: calc(100vw - 60px);
+margin:0 5vw;
+    height: calc(90vw - 60px);
     border-radius: 20px;
 }
 .qr_bg{
@@ -185,7 +186,7 @@ opacity:1;
             top:0;
             left:0;
             z-index:-1;
-            transition:opacity 0.95s, z-index 0.75s;
+            transition:opacity 0.8s, z-index 0.5s;
         }
         .qr_bg.shown{
             opacity:1;
