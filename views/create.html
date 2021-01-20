@@ -406,14 +406,14 @@ let gameZoneOptions = {
 
             map.addLayer({
               id: "circle-fill",
-              type: "fill",
+              type: "line",
               source: {
                 type: "geojson",
                 data: gameZone,
               },
               paint: {
-                "fill-color": "skyblue",
-                "fill-opacity": 0.5,
+                "line-color": "black",
+                "line-width": 4,
               },
             });
 }
@@ -475,14 +475,14 @@ let gameZoneOptions = {
 
             map.addLayer({
               id: "circle-fill",
-              type: "fill",
+              type: "type",
               source: {
                 type: "geojson",
                 data: gameZone,
               },
               paint: {
-                "fill-color": "skyblue",
-                "fill-opacity": 0.5,
+                "line-color": "skyblue",
+                "line-width": 4,
               },
             });
         })})
