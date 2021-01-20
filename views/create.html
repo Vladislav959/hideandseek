@@ -32,7 +32,7 @@
             margin:0;
         }
         h1,h2,h3,h4,h5{
-            font-family:'Montserrat'
+            font-family:'Montserrat';
         }
         *{
             box-sizing: border-box;
@@ -221,16 +221,28 @@ input[type=number] {
     width:28px;
     height:28px;
 }
-.players_count{
-    width:40px;
+.players_count, .zone_radius{
     text-align: center; 
     padding:9px;
+    margin:0;
+}
+.players_count{
+  width:40px;
+}
+.zone_radius{
+  width:60px;
+}
+#map{
+  width:90vw;
+  height:90vw;
+  border-radius:25px;
+  margin:5px 0;
 }
 @media(max-width:480px){
     .mode{
         width:100%;
     }
-    .basic_input:not(.players_count){
+    .basic_input:not(.players_count):not(.zone_radius){
         width:100%;
     }
 }
@@ -317,10 +329,11 @@ input[type=number] {
         <input type="hidden" name="mode" value="basic">
     <p>мпр:
         <input id="s1" type="checkbox" class="switch"></p>
-        <p>Число игроков (макс. 10):&nbsp;&nbsp;<input type="number" class="basic_input players_count"></p>
-        <div id="map" style="width:90vw;height:90vw;margin-left:5vw;">
-
-        </div>
+        <p style="margin-top:10px">Число игроков (макс. 10):&nbsp;&nbsp;<input type="number" class="basic_input players_count" value="3"></p>
+        <h3 style="font-size:1.5em;margin-top:10px;margin-bottom:0px;">Зона игры</h3>
+        <p>Размер зоны в метрах (макс. 250):&nbsp;&nbsp;<input type="number" class="basic_input zone_radius" value="50"></p>
+        <p style="margin-top:5px;font-size:1.3em">Центр:</p>
+        <div id="map"></div>
         <input type="submit" class="create_room" value="Создaть">
     <script>
         document.querySelector('input[type="radio"][value="basic"]').click();
@@ -361,11 +374,12 @@ mapboxgl.accessToken =
             container: "map",
             style: "mapbox://styles/vladoss/ckipmxp6r44xt17m3gbp2vk6n",
             center: [userLongitude, userLatitude],
-            zoom: 18,
+            zoom: 16,
           });
-          var canvas = map.getCanvasContainer();
- 
-var geojson = {
+          let canvas = map.getCanvasContainer();
+let zoneCenter = [userLongitude,userLatitude];
+let zoneRadius = 50;
+let geojson = {
 'type': 'FeatureCollection',
 'features': [
 {
@@ -379,18 +393,13 @@ var geojson = {
 };
  
 function onMove(e) {
-var coords = e.lngLat;
- 
-// Set a UI indicator for dragging.
-canvas.style.cursor = 'grabbing';
- 
-// Update the Point feature in `geojson` coordinates
-// and call setData to the source layer `point` on it.
+let coords = e.lngLat;
 geojson.features[0].geometry.coordinates = [coords.lng, coords.lat];
 map.getSource('point').setData(geojson);
+zoneCenter = [coords.lng,coords.lat];
 let gameZone = turf.circle(
-              turf.point([userLongitude, userLatitude]),
-              25,
+              turf.point([coords.lng,coords.lat]),
+              zoneRadius,
               {
                 steps: 80,
                 units: "meters",
@@ -400,8 +409,6 @@ map.getSource('zone').setData(gameZone)
 }
  
 function onUp(e) {
-
-// Unbind mouse/touch events
 map.off('mousemove', onMove);
 map.off('touchmove', onMove);
 }
@@ -418,11 +425,10 @@ map.addLayer({
 'source': 'point',
 'paint': {
 'circle-radius': 10,
-'circle-color': '#3887be'
+'circle-color': '#0987df'
 }
 });
 map.on('mousedown', 'point', function (e) {
-// Prevent the default map drag behavior.
 e.preventDefault();
  
 canvas.style.cursor = 'grab';
@@ -434,7 +440,6 @@ map.once('mouseup', onUp);
 map.on('touchstart', 'point', function (e) {
 if (e.points.length !== 1) return;
  
-// Prevent the default map drag behavior.
 e.preventDefault();
  
 map.on('touchmove', onMove);
@@ -442,7 +447,7 @@ map.once('touchend', onUp);
 });
             let gameZone = turf.circle(
               turf.point([userLongitude, userLatitude]),
-              25,
+              50,
               {
                 steps: 80,
                 units: "meters",
@@ -451,14 +456,39 @@ map.once('touchend', onUp);
 map.addSource('zone', { type: 'geojson', data: gameZone })
             map.addLayer({
               id: "circle-fill",
-              type: "type",
+              type: "line",
               source: 'zone',
               paint: {
                 "line-color": "skyblue",
-                "line-width": 4,
+                "line-width": 6,
               },
             });
-        })})
+        
+        const zone_radius = document.querySelector('.zone_radius');
+zone_radius.onchange = function() {
+  let curvalue = parseInt(zone_radius.value,10);
+  
+    if(curvalue < 40){
+        zone_radius.value = '40';
+        curvalue = 40;
+    }
+  else if(curvalue>250){
+        zone_radius.value = '250';
+        curvalue = 250;
+  }
+  zoneRadius = curvalue;
+    let zone = turf.circle(
+              turf.point(zoneCenter),
+              curvalue,
+              {
+                steps: 85,
+                units: "meters",
+              }
+            );
+map.getSource('zone').setData(zone)
+  
+}})
+      })
 const sendingName = document.querySelector('.enter_name');
 const sendingCount = document.querySelector('.players_count');
 const sendingMode = document.querySelector('input[name="mode"]');
@@ -493,7 +523,6 @@ players_count.onchange = function() {
         players_count.value = '10';
   }
 }
-
     </script>
 </body>
 </html>
