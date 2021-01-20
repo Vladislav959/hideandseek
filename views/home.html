@@ -163,25 +163,12 @@ padding-bottom:15px;-webkit-transform: translateZ(0);
 transform: translateZ(0);
 z-index:3;
 opacity:0;
-animation-fill-mode:forwards;
+transition:bottom .6s, opacity .9s;
 }
 
 .qr_camera.shown{
-animation:slide .9s;
-animation-fill-mode:forwards;
-}@keyframes slide{
-0%{
-opacity:0;
-bottom:-100vh;
-}
-70%{
 bottom:0;
-opacity:0.7;
-}
-100%{
-bottom:0;
-opacity:1:
-}
+opacity:1;
 }
 .qr_preview_c{
     width: calc(100vw - 60px);
