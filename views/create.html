@@ -389,7 +389,7 @@ canvas.style.cursor = 'grabbing';
 geojson.features[0].geometry.coordinates = [coords.lng, coords.lat];
 map.getSource('point').setData(geojson);
 let gameZone = turf.circle(
-              turf.point([userLongitude, userLatitude]),
+              turf.point([coords.lng, coords.lat]),
               25,
               {
                 steps: 80,
