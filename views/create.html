@@ -20,11 +20,16 @@
             font-family:'Montserrat';
             src:url('./montserrat.ttf');
         }
+        @font-face{
+            font-family:'Euclid';
+            src:url('./euclid.woff');
+        }
         body{
             color:white;
             font-family:'Proxima';
             font-size:1.05em;
             margin:0;
+            scroll-behavior: smooth;
             padding:0 calc((100vw - 400px) / 2);
             background:#030621;
         }
@@ -33,6 +38,9 @@
         }
         h1,h2,h3,h4,h5{
             font-family:'Montserrat';
+        }
+        a{
+          text-decoration: none;
         }
         *{
             box-sizing: border-box;
@@ -92,7 +100,32 @@
        .mode__text p{
             margin-top:3px;
        }
-       
+       .categories{
+         padding:8px 0;
+         width:fit-content;
+         border-radius:8px;
+         display:flex;
+         height: fit-content;
+         background:inherit;
+       }
+       .categories a{
+         border-radius:7px;
+         color:white;
+         margin-right:7px;
+        font-family: 'Euclid';
+        font-size:0.9em;
+        padding:5px 7px;
+       }
+       .category{
+        border-radius:10px;
+         color:white;
+         margin-right:7px;
+        font-family: 'Euclid';
+        font-size:1.1em;
+        padding:6px 13px;
+        margin-top:10px;
+        width: fit-content;
+       }
         .radio {
 	 display: grid;
 	 grid-template-columns: min-content auto;
@@ -200,15 +233,6 @@
     --ab: white;
     --x: 25px;
   }
-.back{
-    width:52px;
-    height:52px;
-    margin-top:15px;
-    display:none;
-    padding:12px;
-    border-radius:50%;
-    background:#8b5fe9;
-}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -238,6 +262,32 @@ input[type=number] {
   border-radius:25px;
   margin:5px 0;
 }
+header{
+  display:flex;
+  position:sticky;
+  top:0;
+  left:0;
+  width:100%;
+  padding:15px;
+  padding-bottom:7px;
+  background:inherit;
+  justify-content: space-between;
+  align-items: center;
+}
+header button{
+  border-radius:10px;
+  padding:5px;
+  font-family: 'Euclid';
+  background:white;
+  font-size:0.9em;
+  color:#8B5FE9;
+}
+header button svg{
+  width:30px;
+  height:30px;
+  vertical-align: middle;
+  margin-left:3px;
+}
 @media(max-width:480px){
     .mode{
         width:100%;
@@ -260,8 +310,11 @@ input[type=number] {
     </style>
 </head>
 <body>
-    <div class="back"><svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></div>
-        <input type="text" class="basic_input enter_name" placeholder="Ваше имя">
+  <header>
+    <button>Назад<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="#8B5FE9" d="M11.3,12l3.5-3.5c0.4-0.4,0.4-1,0-1.4c-0.4-0.4-1-0.4-1.4,0l-4.2,4.2l0,0c-0.4,0.4-0.4,1,0,1.4l4.2,4.2c0.2,0.2,0.4,0.3,0.7,0.3l0,0c0.3,0,0.5-0.1,0.7-0.3c0.4-0.4,0.4-1,0-1.4L11.3,12z"/></svg></button>
+    <div class="categories"><a style="background:#1bb865" href="#main">Основное</a><a style="background:#1b2fea" href="#map">Карта</a></div>    
+  </header>  
+     <input type="text" class="basic_input enter_name" placeholder="Ваше имя">
         <p>Код комнаты:</p>
         <p class="room_code"></p>
         <p style="font-size:1.3em;margin-bottom:8px;margin-top:15px;">Выберите режим:</p>
@@ -330,8 +383,8 @@ input[type=number] {
     <p>мпр:
         <input id="s1" type="checkbox" class="switch"></p>
         <p style="margin-top:10px">Число игроков (макс. 10):&nbsp;&nbsp;<input type="number" class="basic_input players_count" value="3"></p>
-        <h3 style="font-size:1.5em;margin-top:10px;margin-bottom:0px;">Зона игры</h3>
-        <p>Размер зоны в метрах (макс. 250):&nbsp;&nbsp;<input type="number" class="basic_input zone_radius" value="50"></p>
+        <p class="category" style="background:#1b2fea;">Карта</p>
+        <p>Размер зоны (макс. 250):&nbsp;&nbsp;<input type="number" class="basic_input zone_radius" value="50"></p>
         <p style="margin-top:5px;font-size:1.3em">Центр:</p>
         <div id="map"></div>
         <input type="submit" class="create_room" value="Создaть">
