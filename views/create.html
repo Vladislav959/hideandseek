@@ -49,7 +49,7 @@
             outline:none;
         }
         
-        .basic_input, .create_room{
+       .create_room, .basic_input{
             border:2.5px solid #8b5fe9;
             border-radius:10px;
             font-size:1.1em;
@@ -57,6 +57,7 @@
             margin-top:10px;
             font-family: 'Proxima';
         }
+        
         .basic_input{
             padding:13px;
             width:400px;
@@ -101,7 +102,6 @@
             margin-top:3px;
        }
        .categories{
-         padding:8px 0;
          width:fit-content;
          border-radius:8px;
          display:flex;
@@ -111,7 +111,7 @@
        .categories a{
          border-radius:7px;
          color:white;
-         margin-right:7px;
+         margin-left:7px;
         font-family: 'Euclid';
         font-size:0.9em;
         padding:5px 7px;
@@ -119,11 +119,10 @@
        .category{
         border-radius:10px;
          color:white;
-         margin-right:7px;
         font-family: 'Euclid';
-        font-size:1.1em;
-        padding:6px 13px;
-        margin-top:10px;
+        font-size:1em;
+        padding:6px 11px;
+        margin:10px 0;
         width: fit-content;
        }
         .radio {
@@ -268,15 +267,15 @@ header{
   top:0;
   left:0;
   width:100%;
-  padding:15px 0;
-  padding-bottom:7px;
+  padding: 13px 0;
   background:inherit;
   justify-content: space-between;
   align-items: center;
 }
 header button{
   border-radius:10px;
-  padding:5px;
+  height:29.2px;
+  padding: 1.6px;
 border:none;
   font-family: 'Euclid';
   background:white;
@@ -284,10 +283,9 @@ border:none;
   color:#8B5FE9;
 }
 header button svg{
-  width:30px;
-  height:30px;
+  width:26px;
+  height:26px;
   vertical-align: middle;
-  margin-left:3px;
 }
 @media(max-width:480px){
     .mode{
@@ -312,10 +310,11 @@ header button svg{
 </head>
 <body>
   <header>
-    <button>Назад<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="#8B5FE9" d="M11.3,12l3.5-3.5c0.4-0.4,0.4-1,0-1.4c-0.4-0.4-1-0.4-1.4,0l-4.2,4.2l0,0c-0.4,0.4-0.4,1,0,1.4l4.2,4.2c0.2,0.2,0.4,0.3,0.7,0.3l0,0c0.3,0,0.5-0.1,0.7-0.3c0.4-0.4,0.4-1,0-1.4L11.3,12z"/></svg></button>
-    <div class="categories"><a style="background:#1bb865" href="#main">Основное</a><a style="background:#5865e0" href="#map">Карта</a></div>    
-  </header>  
-     <input type="text" class="basic_input enter_name" placeholder="Ваше имя">
+    <button><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="#8b5fe9" d="M17,10.9L17,10.9l-7.6,0l3.3-3.3c0.4-0.4,0.4-1,0-1.4c-0.4-0.4-1-0.4-1.4,0l-5,5c-0.4,0.4-0.4,1,0,1.4c0,0,0,0,0,0l5,5c0.4,0.4,1,0.4,1.4,0c0.4-0.4,0.4-1,0-1.4l-3.3-3.3H17c0.6,0,1-0.4,1-1C18,11.4,17.6,10.9,17,10.9z"/></svg></button>
+    <div class="categories"><a style="background:#1bb865" href="#link_main">Основное</a><a style="background:#5865e0" href="#map">Карта</a></div>    
+  </header>
+  <p class="category" id="link_main" style="background:#1bb865;">Основное</p>
+     <input type="text" style="margin-top:0;" class ="basic_input enter_name" placeholder="Ваше имя">
         <p>Код комнаты:</p>
         <p class="room_code"></p>
         <p style="font-size:1.3em;margin-bottom:8px;margin-top:15px;">Выберите режим:</p>
@@ -384,7 +383,7 @@ header button svg{
     <p>мпр:
         <input id="s1" type="checkbox" class="switch"></p>
         <p style="margin-top:10px">Число игроков (макс. 10):&nbsp;&nbsp;<input type="number" class="basic_input players_count" value="3"></p>
-        <p class="category" style="background:#5865e0;">Карта</p>
+        <p class="category" style="background:#5865e0;margin-bottom:0">Карта</p>
         <p>Размер зоны (макс. 250):&nbsp;&nbsp;<input type="number" class="basic_input zone_radius" value="50"></p>
         <p style="margin-top:5px;font-size:1.3em">Центр:</p>
         <div id="map"></div>
