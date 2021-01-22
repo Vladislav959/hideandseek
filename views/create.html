@@ -286,6 +286,32 @@ header button svg{
   height:26px;
   vertical-align: middle;
 }
+.location_error{
+  width:100vw;
+  height:100vh;
+  z-index:9999;
+  top:0;
+  left:0;
+  position:fixed;
+  background:white;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.location_error > div{
+  background:#f34949;
+  border-radius:15px;
+  padding:15px;
+  width:70vw;
+}
+.location_error > button{
+  background:#8b5fe9;
+  border-radius: 15px;
+  padding:10px 13px;
+  font-family: 'Proxima';
+  font-size: 1em;
+  border:none;
+}
 @media(max-width:480px){
     .mode{
         width:100%;
@@ -308,6 +334,9 @@ header button svg{
     </style>
 </head>
 <body>
+  <div class="location_error">
+    <div></div>
+  </div>
   <header>
     <a href="/"><button><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="white" d="M17,10.9L17,10.9l-7.6,0l3.3-3.3c0.4-0.4,0.4-1,0-1.4c-0.4-0.4-1-0.4-1.4,0l-5,5c-0.4,0.4-0.4,1,0,1.4c0,0,0,0,0,0l5,5c0.4,0.4,1,0.4,1.4,0c0.4-0.4,0.4-1,0-1.4l-3.3-3.3H17c0.6,0,1-0.4,1-1C18,11.4,17.6,10.9,17,10.9z"/></svg></button></a>
     <div class="categories"><a style="background:#1bb865" href="#link_main">Основное</a><a style="background:#5865e0" href="#map">Карта</a></div>    
@@ -399,21 +428,35 @@ header button svg{
 }
 let roomCode = getCode();
 document.querySelector('.room_code').innerText = roomCode;
-function getCoords(position) {
-          userLatitude = position.coords.latitude;
-          userLongitude = position.coords.longitude;
-        } 
+
         let gpsOptions = {
           enableHighAccuracy: true,
           timeout: 1000,
           maximumAge: 0,
         };
+        const location_err_window = document.querySelector('.location_error');
 new Promise((resolve, reject) => {
           if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
-              getCoords,
+              function(position){
+                userLatitude = position.coords.latitude;
+          userLongitude = position.coords.longitude;
+          setTimeout(() => {
+            resolve(1);
+          }, 500);
+              },
               function(err){
-                alert(err.code);
+                console.log('hjkl')
+                if(err.code == 1){
+                  location_err_window.style.display = 'flex';
+                  location_err_window.innerHTML = '<div><p>Дайте сайту доступ к геолокации и включите GPS. Затем перезагрузите страницу.</p></div><button>Перезагрузить</button>'
+                }
+                else if(err.code == 3){
+
+                }
+                else{
+                  alert('ghjkl')
+                }
               },
               gpsOptions
             );
@@ -422,9 +465,7 @@ new Promise((resolve, reject) => {
             alert('Ваш браузер не поддерживает геолокацию. Вы не можете играть в эту игру.')
             location.href = '/'
           }
-          setTimeout(() => {
-            resolve(1);
-          }, 500);
+          
         }).then((result) => {
 mapboxgl.accessToken =
             "pk.eyJ1IjoidmxhZG9zcyIsImEiOiJja2lwbGk2dG0wNTcyMzFueWk2a2w5Y3pmIn0.TUY7Uh57rkJWDux_HdtaVQ";
