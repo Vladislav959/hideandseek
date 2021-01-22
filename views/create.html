@@ -413,7 +413,7 @@ new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(
               getCoords,
               function(err){
-                alert(err);
+                alert(err.code);
               },
               gpsOptions
             );
