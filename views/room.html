@@ -90,42 +90,57 @@
     font-family: 'Montserrat';
         }
         .qrcode{
-            width: 80vw;
-    border-radius: 25px;
-    padding: 17px;
-    height: auto;
-    left: 10vw;
-    position: fixed;
-    top: 12vh;
     background: white;
-        }
-        .qrcode #qrcode{
-            width: fit-content;
-    height: fit-content;
-    margin: auto;
-            margin-top:15px;
-        }
-        .qr_bg{
-            background:rgba(0,0,0,0.35);
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    padding: 20px;
+    width: 100vw;
+    height: auto;
+    left: 0;
+    bottom:-100vh;
+    position: fixed;
+padding-bottom:15px;-webkit-transform: translateZ(0);
+-moz-transform: translateZ(0);
+-ms-transform: translateZ(0);
+-o-transform: translateZ(0);
+transform: translateZ(0);
+z-index:3;
+opacity:0;
+transition:bottom .5s, opacity .8s;
+}
+
+.qrcode.shown{
+bottom:0;
+opacity:1;
+}
+
+.qr_bg{
+    opacity:0;
+            background:rgba(0,0,0,0.3);
             width:100vw;
             height:100vh;
             position:fixed;
             top:0;
             left:0;
+            z-index:-1;
+            transition:opacity 0.8s, z-index 0.5s;
         }
+        .qr_bg.shown{
+            opacity:1;
+            z-index:2;
+        }
+        .qrcode #qrcode{
+            width: fit-content;
+    height: fit-content;
+    border-radius: 10px;
+    margin: auto;
+            margin-top:15px;
+        }
+       
         .qrcode #qrcode img{
-            width: 53vw;
+            width: 65vw;
         }
-        .qrcode p{
-            font-size: 1.05em;
-    color: #565656;
-    margin: 0 5vw;
-    margin-top: 20px;
-        }
-        
-        .qrcode_container{
-            display:none;
-        }
+       
         
         .qr_btn_container{
             width:fit-content;
@@ -203,16 +218,13 @@ margin-left:2px;
             <li><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M8.5,11.5c2.2,0,4-1.8,4-4s-1.8-4-4-4s-4,1.8-4,4S6.3,11.5,8.5,11.5z M13,10.6c1.7,1.4,4.2,1.1,5.6-0.6C20,8.3,19.7,5.8,18,4.4c-0.7-0.6-1.6-0.9-2.5-0.9c-0.9,0-1.8,0.3-2.5,0.9c1.7,1.4,2,3.8,0.6,5.6C13.5,10.2,13.2,10.4,13,10.6z M22.9,19.4c-0.6-3.7-3.7-6.4-7.4-6.4c-0.9,0-1.7,0.1-2.5,0.4c2.6,0.9,4.5,3.2,4.9,5.9c0.1,0.5-0.3,1.1-0.9,1.1c0,0-0.1,0-0.1,0h5c0.6,0,1-0.4,1-1C22.9,19.5,22.9,19.4,22.9,19.4z M8.5,13c-3.7,0-6.9,2.7-7.4,6.4c-0.1,0.5,0.3,1.1,0.9,1.1c0,0,0.1,0,0.1,0h12.8c0.6,0,1-0.4,1-1c0,0,0-0.1,0-0.1C15.4,15.7,12.2,13,8.5,13z"/></svg></li>
             <a href="/"><li><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="white" d="M13.8,15.3c0.4,0.4,0.4,1,0,1.4c-0.4,0.4-1,0.4-1.4,0c0,0,0,0,0,0l-4-4c-0.4-0.4-0.4-1,0-1.4c0,0,0,0,0,0l4-4c0.4-0.4,1-0.4,1.4,0c0.4,0.4,0.4,1,0,1.4L11.5,11H22c-0.6-5.5-5.5-9.5-10.9-8.9C5.6,2.6,1.5,7.5,2.1,13c0.6,5.5,5.5,9.5,10.9,8.9c4.7-0.5,8.5-4.2,8.9-8.9H11.5L13.8,15.3z"></path></svg></li></a>
         </ul>
-    </header>
-    <div class="qrcode_container"><div class="qr_bg"></div>
+    </header><div class="qr_bg"></div>
         
     <div class="qrcode">
         <div id="qrcode">
         </div>
-        <p>Покажи этот QR-код другу.<br>Попроси его зайти на главную страницу и нажать на кнопку "Подключиться через QR". Далее ему следует просканировать QR-код с экрана вашего смартфона.</p>
-  <div class="qrcode_close"><button>Закрыть<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" class="svg-inline--fa fa-times fa-w-11 fa-3x"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z" class=""></path></svg></button></div>
+        <div class="qrcode_close"><button>Закрыть<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" class="svg-inline--fa fa-times fa-w-11 fa-3x"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z" class=""></path></svg></button></div>
   </div>
-    </div>
     <p class="players-count"><span data-option="playersCount1"></span>/<span data-option="playersCount2"></span></p>
     
     <p class="countdown">Ждём всех...</p>
@@ -377,13 +389,26 @@ document.querySelector('span[data-option="playersCount1"]').innerText = data.len
     })
     let qrcode = new QRCode("#qrcode");
     qrcode.makeCode(roomId);
-    let qrcontainer = document.querySelector('.qrcode_container');
+    let qrcode1 = document.querySelector('.qrcode');
+    
+    let qrcode2 = document.querySelector('.qr_bg');
     document.querySelector('.qr_btn_container button').onclick = function(){
 
-        qrcontainer.style.display = 'block';
+        qrcode1.classList.add('shown');
+        
+        qrcode2.classList.add('shown');
     }
     document.querySelector('.qrcode_close').onclick = function(){
-        qrcontainer.style.display = 'none';
+        
+        qrcode1.classList.remove('shown');
+        
+        qrcode2.classList.remove('shown');
+    }
+    qrcode2.onclick = function(){
+        
+        qrcode1.classList.remove('shown');
+        
+        qrcode2.classList.remove('shown');
     }
 }
 else{
