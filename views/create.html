@@ -59,7 +59,7 @@
         }
         
         .basic_input{
-            padding:13px;
+            padding:10px 13px;
             width:400px;
             color:white;
             margin-bottom:15px;
@@ -71,7 +71,7 @@
         
         .create_room{
             padding:9px 12px;
-           margin-top:15px;
+           margin:15px 0;
            color:white;
             background:#8b5fe9;
         }
@@ -117,12 +117,12 @@
         padding:5px 7px;
        }
        .category{
-        border-radius:10px;
+        border-radius:9px;
          color:white;
         font-family: 'Euclid';
-        font-size:1em;
-        padding:6px 11px;
-        margin:10px 0;
+        font-size:0.9em;
+        padding:5px 7px;
+         margin-bottom:10px;
         width: fit-content;
        }
         .radio {
@@ -273,14 +273,13 @@ header{
   align-items: center;
 }
 header button{
-  border-radius:10px;
+  border-radius:50px;
   height:29.2px;
   padding: 1.6px;
 border:none;
   font-family: 'Euclid';
-  background:white;
+  background:#8b5fe9;
   font-size:0.9em;
-  color:#8B5FE9;
 }
 header button svg{
   width:26px;
@@ -310,7 +309,7 @@ header button svg{
 </head>
 <body>
   <header>
-    <button><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="#8b5fe9" d="M17,10.9L17,10.9l-7.6,0l3.3-3.3c0.4-0.4,0.4-1,0-1.4c-0.4-0.4-1-0.4-1.4,0l-5,5c-0.4,0.4-0.4,1,0,1.4c0,0,0,0,0,0l5,5c0.4,0.4,1,0.4,1.4,0c0.4-0.4,0.4-1,0-1.4l-3.3-3.3H17c0.6,0,1-0.4,1-1C18,11.4,17.6,10.9,17,10.9z"/></svg></button>
+    <a href="/"><button><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="white" d="M17,10.9L17,10.9l-7.6,0l3.3-3.3c0.4-0.4,0.4-1,0-1.4c-0.4-0.4-1-0.4-1.4,0l-5,5c-0.4,0.4-0.4,1,0,1.4c0,0,0,0,0,0l5,5c0.4,0.4,1,0.4,1.4,0c0.4-0.4,0.4-1,0-1.4l-3.3-3.3H17c0.6,0,1-0.4,1-1C18,11.4,17.6,10.9,17,10.9z"/></svg></button></a>
     <div class="categories"><a style="background:#1bb865" href="#link_main">Основное</a><a style="background:#5865e0" href="#map">Карта</a></div>    
   </header>
   <p class="category" id="link_main" style="background:#1bb865;">Основное</p>
@@ -403,7 +402,7 @@ document.querySelector('.room_code').innerText = roomCode;
 function getCoords(position) {
           userLatitude = position.coords.latitude;
           userLongitude = position.coords.longitude;
-        }
+        } 
         let gpsOptions = {
           enableHighAccuracy: true,
           timeout: 1000,
@@ -413,9 +412,15 @@ new Promise((resolve, reject) => {
           if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
               getCoords,
-              null,
+              function(err){
+                alert(err);
+              },
               gpsOptions
             );
+          }
+          else{
+            alert('Ваш браузер не поддерживает геолокацию. Вы не можете играть в эту игру.')
+            location.href = '/'
           }
           setTimeout(() => {
             resolve(1);
