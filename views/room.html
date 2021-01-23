@@ -100,20 +100,17 @@
     width: 100vw;
     height: auto;
     left: 0;
-    bottom:-100vh;
+    bottom:0;
     position: fixed;
-padding-bottom:15px;-webkit-transform: translateZ(0);
--moz-transform: translateZ(0);
--ms-transform: translateZ(0);
--o-transform: translateZ(0);
-transform: translateZ(0);
+padding-bottom:15px;
 z-index:3;
+transform:translateY(50vh);
 opacity:0;
-transition:bottom .5s, opacity .8s;
+transition:transform .45s, opacity .8s;
 }
 
 .qrcode.shown{
-bottom:0;
+transform:translateY(0);
 opacity:1;
 }
 
