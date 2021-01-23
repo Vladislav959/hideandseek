@@ -154,20 +154,17 @@ top:8px;
     width: 100vw;
     height: auto;
     left: 0;
-    bottom:-100vh;
+bottom:0;
+    transform:translateY(50vh);
     position: fixed;
-padding-bottom:15px;-webkit-transform: translateZ(0);
--moz-transform: translateZ(0);
--ms-transform: translateZ(0);
--o-transform: translateZ(0);
-transform: translateZ(0);
+padding-bottom:15px;
 z-index:3;
 opacity:0;
-transition:bottom .5s, opacity .8s;
+transition:transform .5s linear, opacity .8s linear;
 }
 
 .qr_camera.shown{
-bottom:0;
+transform:translateY(0);
 opacity:1;
 }
 .qr_preview_c{
