@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js"></script>
+    
+<link rel="shortcut icon" type="image/png" href="./logo.png">
 
     <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
     <link
@@ -267,6 +269,7 @@ header{
   top:0;
   left:0;
   width:100%;
+  z-index:99;
   padding: 13px 0;
   background:inherit;
   justify-content: space-between;
@@ -506,11 +509,13 @@ new Promise((resolve, reject) => {
                 document.body.style.overflow = 'hidden';
                 if(err.code == 1){
                   
-                  location_err_window.innerHTML = '<div><p>Дайте сайту доступ к геолокации и включите GPS. Затем перезагрузите страницу.</p></div><button>Перезагрузить</button>'
+                  location_err_window.innerHTML = '<div><div><p>Дайте сайту доступ к геолокации и включите GPS. Затем перезагрузите страницу.</p></div><button>Перезагрузить</button></div>'
                 }
                 else{
-                  location_err_window.innerHTML = '<div><p>Неизвестная ошибка.</p></div><button>Перезагрузить</button>'
-              
+                  location_err_window.innerHTML = '<div><div><p>Неизвестная ошибка.</p></div><button>Перезагрузить</button></div>'
+                }
+                location_err_window.querySelector('button').onclick = function(){
+                  location.reload();
                 }
               },
               gpsOptions

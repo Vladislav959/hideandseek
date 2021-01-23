@@ -2,7 +2,7 @@
 <html lang="ru">
   <head>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js"></script>
-
+<link rel="shortcut icon" type="image/png" href="./logo.png">
     <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
     <link
       href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css"
@@ -80,6 +80,43 @@
         z-index:9999;
         display:block;
       }
+      .location_error{
+  width:100vw;
+  height:100vh;
+  z-index:9999;
+  top:0;
+  left:0;
+  position:fixed;
+  background:white;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.location_error > div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+}
+.location_error > div > div{
+  background:#f34949;
+  border-radius:20px;
+  padding:15px;
+  width:80vw;
+}
+.location_error > div > div > p{
+  font-size:1.1em;
+}
+.location_error > div > button{
+  background:#8b5fe9;
+  border-radius: 10px;
+  padding:10px 13px;
+  color:white;
+  width: fit-content;
+  margin-top:10px;
+  font-family: 'Proxima';
+  font-size: 1em;
+  border:none;
+}
       .loading_content{
         width:fit-content;
         height:auto;
@@ -101,7 +138,7 @@
             border-radius:12px;
             background:#7373ea;
             position:fixed;
-            z-index:9999;
+            z-index:99;
             margin: auto;
     left: 0;
     top:-50vh;
@@ -144,6 +181,8 @@ top:8px;
     </style>
   </head>
   <body>
+    
+  <div class="location_error"></div>
     <div class="msg_left"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="white" d="M13.8,15.3c0.4,0.4,0.4,1,0,1.4c-0.4,0.4-1,0.4-1.4,0c0,0,0,0,0,0l-4-4c-0.4-0.4-0.4-1,0-1.4c0,0,0,0,0,0l4-4c0.4-0.4,1-0.4,1.4,0c0.4,0.4,0.4,1,0,1.4L11.5,11H22c-0.6-5.5-5.5-9.5-10.9-8.9C5.6,2.6,1.5,7.5,2.1,13c0.6,5.5,5.5,9.5,10.9,8.9c4.7-0.5,8.5-4.2,8.9-8.9H11.5L13.8,15.3z"/></svg><p></p></div>
     
     <div class="loading">
@@ -207,27 +246,41 @@ top:8px;
         socketId = userData.id;
         window.history.pushState({},'Game','/game?id='+socketId)
         let userLongitude, userLatitude;
-        function getCoords(position) {
-          userLatitude = position.coords.latitude;
-          userLongitude = position.coords.longitude;
-        }
+        
         let gpsOptions = {
           enableHighAccuracy: true,
           timeout: 1000,
           maximumAge: 0,
         };
-
+const location_err_window = document.querySelector('.location_error')
         new Promise((resolve, reject) => {
           if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
-              getCoords,
-              null,
-              gpsOptions
-            );
-          }
+              function(position){
+                userLatitude = position.coords.latitude;
+          userLongitude = position.coords.longitude;
           setTimeout(() => {
             resolve(1);
           }, 500);
+              },
+              function(err){
+                location_err_window.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                if(err.code == 1){
+                  
+                  location_err_window.innerHTML = '<div><div><p>Дайте сайту доступ к геолокации и включите GPS. Затем перезагрузите страницу.</p></div><button>Перезагрузить</button></div>'
+                }
+                else{
+                  location_err_window.innerHTML = '<div><div><p>Неизвестная ошибка.</p></div><button>Перезагрузить</button></div>'
+                }
+                location_err_window.querySelector('button').onclick = function(){
+                  location.reload();
+                }
+              },
+              gpsOptions
+            );
+          }
+         
         }).then((result) => {
           console.log(username);
           console.log(userLongitude);
@@ -357,7 +410,9 @@ top:8px;
               console.log('starting')
               socket.on("user left",(data)=>{
                 console.log('user left');
+                if(window['posMarker-'+data]){
                 window['posMarker-'+data].remove();
+                }
                 msg_box.querySelector('p').innerText = `${data} покинул игру`;
               msg_box.style.display = 'flex';
               setTimeout(function(){

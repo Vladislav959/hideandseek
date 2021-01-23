@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+<link rel="shortcut icon" type="image/png" href="./logo.png">
     <title>Hide and Seek.Real</title>
     <style>
         @font-face{
@@ -226,6 +228,31 @@ margin-left:2px;
 .qr_sign svg{
     margin-left:5px;
 }
+.basic_input{
+    width: 100%;
+    color: black;
+    border: 2.5px solid #8b5fe9;
+    border-radius: 10px;
+    font-size: 1.1em;
+    background: none;
+    margin-top: 5px;
+    font-family: 'Proxima';
+    padding: 9px 12px;
+    font-weight: 100;
+}
+.basic_input::placeholder{
+    color:black;
+}
+.basic_button{
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1em;
+    padding: 10px 13px;
+    background: #8b5fe9;
+    margin-top: 10px;
+    color: white;
+    font-family: 'Proxima';
+}
     </style>
     
 </head>
@@ -313,19 +340,24 @@ document.querySelector('.nameexists').innerText = 'Ошибка имени.';
         
     </script>
     <script type="module">
+      const qrElem1 = document.querySelector('.qr_camera');
+      const qrElem2 = document.querySelector('.qr_bg');
         import QrScanner from './node_modules/qr-scanner/qr-scanner.min.js';
         
     QrScanner.WORKER_PATH = 'node_modules/qr-scanner/qr-scanner-worker.min.js';
     document.querySelector('#qr_preview').addEventListener("change",function(){alert('changed')});
    const qr = new QrScanner(document.querySelector('#qr_preview'), function(result){
        if(result.length == 6 && result == result.toUpperCase() && !/\d/.test(result)){
-location.href = `/room?roomId=${result}&name=test`;
+qrElem1.innerHTML = '<p style="color:black;font-size:1.25em">Введите имя:</p><input type="text" class="basic_input" placeholder="Введите имя..."><button class="basic_button">Войти</button>'
+       qrElem1.style.padding = '20px 30px';
+       document.querySelector('.basic_button').onclick = function(){
+           let value  = document.querySelector('.basic_input').value;
+           location.href = `/room?roomId=${result}&name=${value}`
        }
+}
     });
     
     qr.start();
-      const qrElem1 = document.querySelector('.qr_camera');
-      const qrElem2 = document.querySelector('.qr_bg');
         document.querySelector('.qr_close button').onclick = function(){
             qrElem1.classList.remove('shown');
             qrElem2.classList.remove('shown');

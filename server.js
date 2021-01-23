@@ -16,7 +16,7 @@ function createRoom(roomId,creatorId,mode,count){
 }
 
 function createUser(id, username, roomId) {
-  const user = { id, username, roomId};
+  const user = { id, username, roomId,inGame:false};
   users.push(user);
   return user;
 }
@@ -88,7 +88,7 @@ console.log(user.username)
 }
 function getRoomOptions(roomId){
     let room = roomsData.find(room => room.roomId == roomId);
-    return {mode:room.mode,playersMax:room.playersMax}
+    return {mode:room.mode,playersMax:room.playersMax,playersCount:room.playersCount}
 }
 function getRoomState(roomId){
     console.log(roomId);
@@ -115,7 +115,8 @@ roomSocket.on("connection",(socket)=>{
         }
         else{
             if(usernameExists(data.roomId,data.username)){
-                socket.emit('username exists',true);
+                socket.emit('redirect',true);
+                console.log('hbjkl')
             }
             else{
                 
@@ -148,7 +149,8 @@ user.toGame = true;
     });
     socket.on("start game", data => {
         console.log(users);
-        if(checkCreatority(data.room,data.id)){
+        
+        if(checkCreatority(data.room,data.id) && getRoomOptions(data.room).playersCount > 1){
             console.log('2')
             roomSocket.to(data.room).emit("preparing game",true);
             roomsData[roomsData.findIndex(room => room.roomId == data.room)].state = 1;
@@ -156,6 +158,9 @@ user.toGame = true;
         if(global.gameCountdown !== undefined){
             clearTimeout(global.gameCountdown);
         }
+        }
+        else{
+            console.log('guhjkl')
         }
     })
     socket.on("delete room", data => {
@@ -231,7 +236,8 @@ console.log(curUser);
         
         console.log('JOINED!!!')
         console.log(curUser.roomId);
-        users[users.findIndex(user => user.id == data)].id = socket.id;
+        let index = users.findIndex(user => user.id == data);
+        users[index].id = socket.id;
         if(socket.emit('receive data',getUser(socket.id))){
             console.log('hukjl')
         }
@@ -241,8 +247,10 @@ console.log(curUser);
         console.log('ertyuio')
     }
     }
-    catch{
+    catch(err){
         socket.emit('redirect',true);
+        console.log('catched:'+err)
+        console.log(socket.id);
     }
     })
     socket.on('map load',data=>{
@@ -282,13 +290,10 @@ console.log(curUser);
         roomsData[index].playersCount--;
         console.log( roomsData[index].playersCount);
         let playersCount = roomsData[index].playersCount;
-        if(playersCount > 1){
+       
             gameSocket.to(user.roomId).emit('user left',user.username);
-        }
-        else if(playersCount == 1){
-            console.log('whaaat');
-        }
-        else if(playersCount == 0){
+        
+    if(playersCount == 0){
     roomsData.splice(index,1);
         }
     }
