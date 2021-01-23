@@ -152,9 +152,10 @@ top:8px;
     border-top-right-radius: 25px;
     padding: 30px;
     width: 100vw;
-    height: auto;
+    height: calc(96.5vw + 51px);
     left: 0;
 bottom:0;
+overflow: hidden;
     transform:translateY(50vh);
     position: fixed;
 padding-bottom:15px;
@@ -264,20 +265,22 @@ margin-left:2px;
 @keyframes qr2{
     0%{
         opacity:0;
-        height: 0;
+        max-height: 0;
     }
     100%{
         opacity:1;
-        height: fit-content;
+        max-height: 1000px;
     }
 }
 .qr_content2{
-    height: 0;
+    max-height: 0;
     z-index: 5;
+    opacity:0;
 }
 .qr_content1{
     z-index: 4;
-    height: fit-content;
+    opacity:1;
+    max-height: 1000px;
 }
 .qr_content1, .qr_content2{
     overflow: hidden;
@@ -381,7 +384,11 @@ document.querySelector('.nameexists').innerText = 'Ошибка имени.';
    const qr = new QrScanner(document.querySelector('#qr_preview'), function(result){
        //if(result.length == 6 && result == result.toUpperCase() && !/\d/.test(result)){
 qrElem1.querySelector('.qr_content1').style.animation = 'qr1 1s';
+setTimeout(function(){
+    
 qrElem1.querySelector('.qr_content2').style.animation = 'qr2 1s';
+qrElem1.style.maxHeight = 'auto';
+},1000)
        qrElem1.style.padding = '20px 30px';
        document.querySelector('.basic_button').onclick = function(){
            let value  = document.querySelector('.basic_input').value;
