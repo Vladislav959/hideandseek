@@ -119,13 +119,13 @@
         padding:5px 7px;
        }
        .category{
-        border-radius:9px;
-         color:white;
-        font-family: 'Euclid';
-        font-size:0.9em;
-        padding:5px 7px;
-         margin-bottom:10px;
-        width: fit-content;
+        color: white;
+    font-family: 'Euclid';
+    font-size: 0.95em;
+    margin:6px 0px;
+    margin-bottom:7px;
+    padding-bottom: 0.5px;
+    width: fit-content;
        }
         .radio {
 	 display: grid;
@@ -398,9 +398,9 @@ top:12px;
     
   <header>
     <a href="/"><button><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="white" d="M17,10.9L17,10.9l-7.6,0l3.3-3.3c0.4-0.4,0.4-1,0-1.4c-0.4-0.4-1-0.4-1.4,0l-5,5c-0.4,0.4-0.4,1,0,1.4c0,0,0,0,0,0l5,5c0.4,0.4,1,0.4,1.4,0c0.4-0.4,0.4-1,0-1.4l-3.3-3.3H17c0.6,0,1-0.4,1-1C18,11.4,17.6,10.9,17,10.9z"/></svg></button></a>
-    <div class="categories"><a style="background:#1bb865" href="#link_main">Основное</a><a style="background:#5865e0" href="#map">Карта</a></div>    
+    <div class="categories"><a style="background:#1bb865" href="#link_main">Основное</a><a style="background:#4977f6" href="#map">Карта</a></div>    
   </header>
-  <p class="category" id="link_main" style="background:#1bb865;margin-top:5px">Основное</p>
+  <p class="category" id="link_main" style="border-bottom: 3px dashed#1bb865;margin-top:5px">Основное</p>
      <input type="text" style="margin-top:0;" class ="basic_input enter_name" placeholder="Ваше имя">
         <p>Код комнаты:</p>
         <p class="room_code"></p>
@@ -461,8 +461,8 @@ top:12px;
                   
             </div>
             <div class="mode__text">
-            <h2>Постучись!</h2>
-            <p>Мирные пытаются добраться до точки, а водящий охраняет её.</p>
+            <h2>Фронт-ин</h2>
+            <p>С каждой секундой зона сужается. Расслабиться не получится!</p>
                 </div>
         </div>
         </div>
@@ -470,7 +470,7 @@ top:12px;
     <p>мпр:
         <input id="s1" type="checkbox" class="switch"></p>
         <p style="margin-top:10px">Число игроков (макс. 10):&nbsp;&nbsp;<input type="number" class="basic_input players_count" value="3"></p>
-        <p class="category" style="background:#5865e0;margin-bottom:0">Карта</p>
+        <p class="category" style="margin-top:10px;border-bottom: 3px dashed #4977f6;margin-bottom:0">Карта</p>
         <p>Размер зоны (макс. 250):&nbsp;&nbsp;<input type="number" class="basic_input zone_radius" value="50"></p>
         <p style="margin-top:5px;font-size:1.3em">Центр:</p>
         <div id="map"></div>
@@ -648,14 +648,22 @@ map.getSource('zone').setData(zone)
   
 }})
       })
+      let msgShowed = false;
 const sendingName = document.querySelector('.enter_name');
 const sendingCount = document.querySelector('.players_count');
 const sendingMode = document.querySelector('input[name="mode"]');
 const msg_error = document.querySelector('.msg_error');
 document.querySelector('.create_room').onclick = ()=>{
     if(sendingCount.value == '' || sendingMode.value == '' || sendingName.value == ''){
+      if(!msgShowed){
+        msgShowed = true;
       msg_error.querySelector('p').innerText = 'Введите всё.';
     msg_error.style.display = 'flex';
+    setTimeout(function(){
+msg_error.style.display = 'none';
+msgShowed = false;
+    },3700)
+      }
     }
     else{
         location.href = '/room?roomId=' + roomCode + '&name=' + sendingName.value + '&mode=' + sendingMode.value + '&count=' +sendingCount.value;

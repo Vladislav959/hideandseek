@@ -237,9 +237,58 @@ height:20px;
 color:white;
 margin-right: -1px;
 }
+.msg_error{
+            padding:12px 15px;
+            border-radius:12px;
+            background:#7373ea;
+            position:fixed;
+            margin: auto;
+    left: 0;
+    top:-50vh;
+    animation:fadeIn 3.8s;
+    animation-fill-mode: forwards;
+    width: fit-content;
+    right: 0;
+            display: none;
+            justify-content: space-between;
+            z-index:999;
+        }
+        .msg_error p{
+            color:white;
+            line-height: 35px;
+            margin-left:7px;    
+}
+@keyframes fadeIn{
+    0%{
+        top:-50vh;
+    }
+    8%{
+        top:19px;
+    }
+    13%{
+top:12px;
+    }
+    85%{
+top:12px;
+    }
+    90%{
+        top:19px;
+    }
+    100%{
+        top:-50vh;
+    }
+}
+.msg_error svg{
+    width:30px;
+    height:30px;
+}
+.msg_svg{
+    height:30px;
+}
         </style>
 </head>
 <body>
+    <div class="msg_error"><div class="msg_svg"></div><p></p></div>
    <header>
         <div class="logo">
             <img src="./logo.png">
@@ -314,7 +363,7 @@ const copyCode = () => {
   document.body.removeChild(el);
 };
 if(!hasNumbers(roomId) && roomId.length == 6){
-if(getParam('mode') !== false){
+if(getParam('mode') !== false && getParam('count') !== false){
     socket.emit('join room',{roomId: roomId,username:player.name,gameOptions:{mode:getParam('mode'),count:getParam('count')}});
 }
 else{
@@ -374,6 +423,9 @@ document.querySelector('span[data-option="mode"]').innerText = curMode;
 document.querySelector('span[data-option="playersCount2"]').innerText = data.playersMax;
 playersMaxCount = data.playersCount;
 })
+let msgShowed = false;
+let msgWaiting = [];
+const msg_error = document.querySelector('.msg_error')
 document.querySelector('span[data-option="roomcode"]').innerText = roomId;
 socket.on('roomUsers',(data)=>{
     document.querySelector('.users').innerHTML = '';
@@ -388,11 +440,34 @@ document.querySelector('span[data-option="playersCount1"]').innerText = data.len
         item.innerText = username;
         ul.appendChild(item);
     })
-    document.querySelector('.users').appendChild(ul);})
+    document.querySelector('.users').appendChild(ul);
+})
     
     socket.on('user left',data => {
-        alert(`${data} вышел`);
         playersCount--;
+        if(!msgShowed){
+        msgShowed = true;
+        document.querySelector('.msg_svg').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M11.4,11H20V5c0-1.7-1.3-3-3-3H7C5.3,2,4,3.3,4,5v14c0,1.7,1.3,3,3,3h10c1.7,0,3-1.3,3-3v-6h-8.6l2.3,2.3c0.4,0.4,0.4,1,0,1.4c-0.4,0.4-1,0.4-1.4,0l-4-4c0,0,0,0,0,0c-0.4-0.4-0.4-1,0-1.4l4-4c0.4-0.4,1-0.4,1.4,0c0.4,0.4,0.4,1,0,1.4L11.4,11z"/></svg>';
+      msg_error.querySelector('p').innerText = `${data} вышел`;
+    msg_error.style.display = 'flex';
+    setTimeout(function(){
+msg_error.style.display = 'none';
+msgShowed = false;
+    },3700);
+}
+    else{
+    if(msgWaiting.length > 0){
+        while(msgWaiting.length > 0){
+            msg_error.querySelector('p').innerText = `${msgWaiting[0]} вышел`;
+            msgWaiting.shift();
+    msg_error.style.display = 'flex';
+    setTimeout(function(){
+msg_error.style.display = 'none';
+msgShowed = false;
+    },3700);
+        }
+    }
+}
     })
     socket.on('preparing game',data => {
         if(data){
