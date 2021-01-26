@@ -443,7 +443,7 @@ document.querySelector('.startgame button').onclick = ()=>{
             if(playersCount > 1){
                 
             socket.emit('start game',{id:player.socketId,room:roomId});
-            }
+            
         }
 }
 })
