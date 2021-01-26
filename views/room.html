@@ -381,8 +381,7 @@ socket.on('get id',data => {
 socket.on('get permissions',data => {
     if(data){
     player.isCreator = true;
-    document.querySelector('.startgame').innerHTML = `<p>или</p><button><span style="padding-top: 3px;">Начать сейчас</span><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="white" d="M18.5,9L8.9,3.5C8.4,3.2,7.8,3,7.2,3C5.3,3,3.8,4.5,3.8,6.4v11.2c0,1.9,1.5,3.4,3.4,3.4c0.6,0,1.2-0.2,1.7-0.5l9.7-5.6c0.5-0.3,0.9-0.7,1.2-1.2C20.7,12.1,20.2,10,18.5,9z"/></svg></button>`;
-    document.querySelector('.header_icons').innerHTML = `<li><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="white" d="M20.3,12.7c-0.3-0.4-0.3-0.9,0-1.3l1.3-1.4c0.3-0.3,0.3-0.8,0.1-1.2l-2-3.5c-0.2-0.4-0.6-0.6-1.1-0.5l-1.9,0.4c-0.5,0.1-1-0.2-1.1-0.7l-0.6-1.8C14.8,2.3,14.4,2,14,2h-4C9.6,2,9.2,2.3,9.1,2.7L8.4,4.5C8.3,5,7.8,5.3,7.3,5.2L5.4,4.8C5,4.7,4.6,4.9,4.3,5.3l-2,3.5C2.1,9.1,2.2,9.6,2.5,9.9l1.3,1.4c0.3,0.4,0.3,0.9,0,1.3l-1.3,1.4c-0.3,0.3-0.3,0.8-0.1,1.2l2,3.5c0.2,0.4,0.6,0.6,1.1,0.5l1.9-0.4c0.5-0.1,1,0.2,1.1,0.7l0.6,1.8C9.2,21.7,9.6,22,10,22h4c0.4,0,0.8-0.3,0.9-0.7l0.6-1.8c0.2-0.5,0.7-0.8,1.1-0.7l1.9,0.4c0.4,0.1,0.9-0.1,1.1-0.5l2-3.5c0.2-0.4,0.2-0.8-0.1-1.2L20.3,12.7z M12,15c-1.7,0-3-1.3-3-3s1.3-3,3-3s3,1.3,3,3S13.7,15,12,15z"/></svg></li><li data-option="deleteroom"><svg xmlns="http://www.w3.org/2000/svg" style="background:#f34949" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="white" d="M20,6h-4V5c0-1.7-1.3-3-3-3h-2C9.3,2,8,3.3,8,5v1H4C3.4,6,3,6.4,3,7s0.4,1,1,1h1v11c0,1.7,1.3,3,3,3h8c1.7,0,3-1.3,3-3V8h1c0.6,0,1-0.4,1-1S20.6,6,20,6z M10,5c0-0.6,0.4-1,1-1h2c0.6,0,1,0.4,1,1v1h-4V5z M11,17c0,0.6-0.4,1-1,1s-1-0.4-1-1v-6c0-0.6,0.4-1,1-1s1,0.4,1,1V17z M15,17c0,0.6-0.4,1-1,1s-1-0.4-1-1v-6c0-0.6,0.4-1,1-1s1,0.4,1,1V17z"></path></svg></li><a href="/"><li><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="white" d="M13.8,15.3c0.4,0.4,0.4,1,0,1.4c-0.4,0.4-1,0.4-1.4,0c0,0,0,0,0,0l-4-4c-0.4-0.4-0.4-1,0-1.4c0,0,0,0,0,0l4-4c0.4-0.4,1-0.4,1.4,0c0.4,0.4,0.4,1,0,1.4L11.5,11H22c-0.6-5.5-5.5-9.5-10.9-8.9C5.6,2.6,1.5,7.5,2.1,13c0.6,5.5,5.5,9.5,10.9,8.9c4.7-0.5,8.5-4.2,8.9-8.9H11.5L13.8,15.3z"></path></svg></li></a>`;
+      document.querySelector('.header_icons').innerHTML = `<li><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="white" d="M20.3,12.7c-0.3-0.4-0.3-0.9,0-1.3l1.3-1.4c0.3-0.3,0.3-0.8,0.1-1.2l-2-3.5c-0.2-0.4-0.6-0.6-1.1-0.5l-1.9,0.4c-0.5,0.1-1-0.2-1.1-0.7l-0.6-1.8C14.8,2.3,14.4,2,14,2h-4C9.6,2,9.2,2.3,9.1,2.7L8.4,4.5C8.3,5,7.8,5.3,7.3,5.2L5.4,4.8C5,4.7,4.6,4.9,4.3,5.3l-2,3.5C2.1,9.1,2.2,9.6,2.5,9.9l1.3,1.4c0.3,0.4,0.3,0.9,0,1.3l-1.3,1.4c-0.3,0.3-0.3,0.8-0.1,1.2l2,3.5c0.2,0.4,0.6,0.6,1.1,0.5l1.9-0.4c0.5-0.1,1,0.2,1.1,0.7l0.6,1.8C9.2,21.7,9.6,22,10,22h4c0.4,0,0.8-0.3,0.9-0.7l0.6-1.8c0.2-0.5,0.7-0.8,1.1-0.7l1.9,0.4c0.4,0.1,0.9-0.1,1.1-0.5l2-3.5c0.2-0.4,0.2-0.8-0.1-1.2L20.3,12.7z M12,15c-1.7,0-3-1.3-3-3s1.3-3,3-3s3,1.3,3,3S13.7,15,12,15z"/></svg></li><li data-option="deleteroom"><svg xmlns="http://www.w3.org/2000/svg" style="background:#f34949" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="white" d="M20,6h-4V5c0-1.7-1.3-3-3-3h-2C9.3,2,8,3.3,8,5v1H4C3.4,6,3,6.4,3,7s0.4,1,1,1h1v11c0,1.7,1.3,3,3,3h8c1.7,0,3-1.3,3-3V8h1c0.6,0,1-0.4,1-1S20.6,6,20,6z M10,5c0-0.6,0.4-1,1-1h2c0.6,0,1,0.4,1,1v1h-4V5z M11,17c0,0.6-0.4,1-1,1s-1-0.4-1-1v-6c0-0.6,0.4-1,1-1s1,0.4,1,1V17z M15,17c0,0.6-0.4,1-1,1s-1-0.4-1-1v-6c0-0.6,0.4-1,1-1s1,0.4,1,1V17z"></path></svg></li><a href="/"><li><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="white" d="M13.8,15.3c0.4,0.4,0.4,1,0,1.4c-0.4,0.4-1,0.4-1.4,0c0,0,0,0,0,0l-4-4c-0.4-0.4-0.4-1,0-1.4c0,0,0,0,0,0l4-4c0.4-0.4,1-0.4,1.4,0c0.4,0.4,0.4,1,0,1.4L11.5,11H22c-0.6-5.5-5.5-9.5-10.9-8.9C5.6,2.6,1.5,7.5,2.1,13c0.6,5.5,5.5,9.5,10.9,8.9c4.7-0.5,8.5-4.2,8.9-8.9H11.5L13.8,15.3z"></path></svg></li></a>`;
         document.querySelector('.startgame button').onclick = ()=>{
             console.log(playersCount)
             if(playersCount > 1){
@@ -441,10 +440,17 @@ document.querySelector('span[data-option="playersCount1"]').innerText = data.len
         ul.appendChild(item);
     })
     document.querySelector('.users').appendChild(ul);
+if(playersCount > 1{
+document.querySelector('.startgame').innerHTML = `<p>или</p><button><span style="padding-top: 3px;">Начать сейчас</span><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="white" d="M18.5,9L8.9,3.5C8.4,3.2,7.8,3,7.2,3C5.3,3,3.8,4.5,3.8,6.4v11.2c0,1.9,1.5,3.4,3.4,3.4c0.6,0,1.2-0.2,1.7-0.5l9.7-5.6c0.5-0.3,0.9-0.7,1.2-1.2C20.7,12.1,20.2,10,18.5,9z"/></svg></button>`;
+}
 })
     
     socket.on('user left',data => {
         playersCount--;
+if(playersCount < 2){
+document.querySelector('.startgame').innerHTML = ``;
+
+}
         if(!msgShowed){
         msgShowed = true;
         document.querySelector('.msg_svg').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24"><path fill="#FFFFFF" d="M11.4,11H20V5c0-1.7-1.3-3-3-3H7C5.3,2,4,3.3,4,5v14c0,1.7,1.3,3,3,3h10c1.7,0,3-1.3,3-3v-6h-8.6l2.3,2.3c0.4,0.4,0.4,1,0,1.4c-0.4,0.4-1,0.4-1.4,0l-4-4c0,0,0,0,0,0c-0.4-0.4-0.4-1,0-1.4l4-4c0.4-0.4,1-0.4,1.4,0c0.4,0.4,0.4,1,0,1.4L11.4,11z"/></svg>';
