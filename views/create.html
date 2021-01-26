@@ -505,10 +505,10 @@ new Promise((resolve, reject) => {
           }, 500);
               },
               function(err){
-                location_err_window.style.display = 'flex';
+                    if(err.code == 1){
+                  location_err_window.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
-                if(err.code == 1){
-                  
+            
                   location_err_window.innerHTML = '<div><div><p>Дайте сайту доступ к геолокации и включите GPS. Затем перезагрузите страницу.</p></div><button>Перезагрузить</button></div>'
                 }
                 
