@@ -511,9 +511,7 @@ new Promise((resolve, reject) => {
                   
                   location_err_window.innerHTML = '<div><div><p>Дайте сайту доступ к геолокации и включите GPS. Затем перезагрузите страницу.</p></div><button>Перезагрузить</button></div>'
                 }
-                else{
-                  location_err_window.innerHTML = '<div><div><p>Неизвестная ошибка.</p></div><button>Перезагрузить</button></div>'
-                }
+                
                 location_err_window.querySelector('button').onclick = function(){
                   location.reload();
                 }
